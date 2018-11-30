@@ -5,19 +5,22 @@
  */
 package lab_8_brauliocalix;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author User
  */
-public class cliente {
+public class cliente implements Serializable {
+
     private String nombre;
     private String apellido;
     private String tarjeta;
     private int pagado;
     private int billete;
-    private ArrayList recibos= new ArrayList();
+    private ArrayList recibos = new ArrayList();
+    private static final long SerializableVersionUID = 55L;
 
     public cliente() {
     }
@@ -30,7 +33,6 @@ public class cliente {
         this.billete = billete;
     }
 
-    
     public String getNombre() {
         return nombre;
     }
@@ -78,5 +80,10 @@ public class cliente {
     public void setRecibos(ArrayList recibos) {
         this.recibos = recibos;
     }
-    
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
+
 }

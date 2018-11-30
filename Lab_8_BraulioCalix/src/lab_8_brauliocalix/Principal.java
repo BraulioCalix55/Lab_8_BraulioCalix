@@ -6,6 +6,7 @@
 package lab_8_brauliocalix;
 
 import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -20,6 +21,9 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        adminClientes ap = new adminClientes("./CLIENTES.HOLADIEGO");
+        ap.cargarArchivo();
+        cli = ap.getListaPersonas();
         tamano_lista.setText("en la lista hay: " + cli.size() + " clientes");
         comida.add(new comida("hamburgesa", 20, 75, 100));
         comida.add(new comida("sandiwiches", 15, 90, 100));
@@ -32,6 +36,9 @@ public class Principal extends javax.swing.JFrame {
         comida.add(new comida("gringas", 17, 55, 100));
         comida.add(new comida("bebida", 0, 90, 100));
         comida.add(new comida("la excepcion en rocas", 0, 150, 100));
+        adminAlimentos ad= new adminAlimentos("./INVENTARIO.HOLADIEGO");
+        ad.setListaPersonas(comida);
+        ad.escribirArchivo();
     }
 
     /**
@@ -74,9 +81,19 @@ public class Principal extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         simulacion = new javax.swing.JDialog();
         mostrar_inventar = new javax.swing.JButton();
+        modificar = new javax.swing.JDialog();
+        modi_combo = new javax.swing.JComboBox<>();
+        modi_efec = new javax.swing.JTextField();
+        modi_cargo = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        bt_modifica = new javax.swing.JButton();
+        eliminar = new javax.swing.JButton();
         iniciar = new javax.swing.JButton();
         crea_cliente = new javax.swing.JButton();
         tamano_lista = new javax.swing.JLabel();
+        modifi = new javax.swing.JButton();
 
         normal.setText("cliente normal");
         normal.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -316,6 +333,83 @@ public class Principal extends javax.swing.JFrame {
                 .addContainerGap(548, Short.MAX_VALUE))
         );
 
+        modi_combo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                modi_comboItemStateChanged(evt);
+            }
+        });
+
+        jLabel11.setText("efectivo");
+
+        jLabel12.setText("cargo en la tarjeta");
+
+        jLabel15.setText("seleccione el cliente a modificar");
+
+        bt_modifica.setText("modificar");
+        bt_modifica.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bt_modificaMouseClicked(evt);
+            }
+        });
+
+        eliminar.setText("eliminar");
+        eliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eliminarMouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout modificarLayout = new javax.swing.GroupLayout(modificar.getContentPane());
+        modificar.getContentPane().setLayout(modificarLayout);
+        modificarLayout.setHorizontalGroup(
+            modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(modificarLayout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addGroup(modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(modi_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(modi_efec)
+                    .addComponent(modi_cargo))
+                .addGroup(modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(modificarLayout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addGroup(modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(124, 124, 124))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, modificarLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel15)
+                        .addGap(31, 31, 31))))
+            .addGroup(modificarLayout.createSequentialGroup()
+                .addGap(119, 119, 119)
+                .addComponent(bt_modifica)
+                .addGap(88, 88, 88)
+                .addComponent(eliminar)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        modificarLayout.setVerticalGroup(
+            modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(modificarLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(modi_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel15))
+                .addGap(57, 57, 57)
+                .addGroup(modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(modificarLayout.createSequentialGroup()
+                        .addGroup(modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(modi_efec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))
+                        .addGap(51, 51, 51)
+                        .addComponent(modi_cargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addGroup(modificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bt_modifica)
+                    .addComponent(eliminar))
+                .addGap(34, 34, 34))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         iniciar.setText("iniciar ");
@@ -334,20 +428,32 @@ public class Principal extends javax.swing.JFrame {
 
         tamano_lista.setText("jLabel1");
 
+        modifi.setText("eliminar o modificar");
+        modifi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                modifiMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(188, 188, 188)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(crea_cliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(iniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(216, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(tamano_lista, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(64, 64, 64))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(188, 188, 188)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(crea_cliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(iniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addComponent(modifi)))
+                .addContainerGap(199, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -356,7 +462,9 @@ public class Principal extends javax.swing.JFrame {
                 .addComponent(tamano_lista)
                 .addGap(36, 36, 36)
                 .addComponent(crea_cliente)
-                .addGap(89, 89, 89)
+                .addGap(29, 29, 29)
+                .addComponent(modifi)
+                .addGap(35, 35, 35)
                 .addComponent(iniciar)
                 .addContainerGap(118, Short.MAX_VALUE))
         );
@@ -387,19 +495,30 @@ public class Principal extends javax.swing.JFrame {
 
     private void creaUniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_creaUniMouseClicked
         // TODO add your handling code here:
+
+        adminClientes ap = new adminClientes("./CLIENTES.HOLADIEGO");
+        ap.cargarArchivo();
+
         String nombre = uni_nombre.getText();
         String apellido = uni_apellido.getText();
         String tarjeta = (String) uni_tarjeta.getSelectedItem();
         String cuenta = uni_cuenta.getText();
+        int billete = 0;
+
         try {
-            int billete = Integer.parseInt(uni_billete.getText());
-            cli.add(new clienteuni(cuenta, nombre, apellido, tarjeta, 0, billete));
+            billete = Integer.parseInt(uni_billete.getText());
+
+            //cli.add(new clienteuni(cuenta, nombre, apellido, tarjeta, 0, billete));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(unitec, "no se pudo crear el cliente");
         }
+        cliente p = new clienteuni(cuenta, nombre, apellido, tarjeta, 0, billete);
+        ap.setpersona(p);
+        ap.escribirArchivo();
         // int billete=Integer.parseInt(uni_billete.getText()) ;
         //String cuenta, String nombre, String apellido, String tarjeta, int pagado, int billete
         JOptionPane.showMessageDialog(unitec, "se creo el cliente");
+        cli= ap.getListaPersonas();
         tamano_lista.setText("en la lista hay: " + cli.size() + " clientes");
         unitec.dispose();
         crear.dispose();
@@ -409,18 +528,30 @@ public class Principal extends javax.swing.JFrame {
 
     private void creanormalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_creanormalMouseClicked
         // TODO add your handling code here:
+        adminClientes ap = new adminClientes("./CLIENTES.HOLADIEGO");
+        ap.cargarArchivo();
         String nombre = cli_nombre.getText();
         String apellido = cli_apellido.getText();
         String tarjeta = (String) cli_tarjeta.getSelectedItem();
-        //int billete=0;
+        int billete = 0;
         try {
-            int billete = Integer.parseInt(cli_billete.getText());
-            cli.add(new cliente(nombre, apellido, tarjeta, 0, billete));
+            billete = Integer.parseInt(cli_billete.getText());
+            //cli.add(new cliente(nombre, apellido, tarjeta, 0, billete));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(cliente, "no se pudo crear el cliente");
         }
+        cliente p = new cliente(nombre, apellido, tarjeta, 0, billete);
+        ap.setpersona(p);
+        ap.escribirArchivo();
+
         JOptionPane.showMessageDialog(unitec, "se creo el cliente");
+        cli = ap.getListaPersonas();
         tamano_lista.setText("en la lista hay: " + cli.size() + " clientes");
+        
+        for (int i = 0; i < cli.size(); i++) {
+            System.out.println(cli.get(i).toString() + "\n");
+        }
+
         cliente.dispose();
         crear.dispose();
 
@@ -429,20 +560,18 @@ public class Principal extends javax.swing.JFrame {
     private void mostrar_inventarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mostrar_inventarMouseClicked
         // TODO add your handling code here:
 
-         jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Alimentos", "tiempo-mins", "precio", "cantidad"
-            }
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{},
+                new String[]{
+                    "Alimentos", "tiempo-mins", "precio", "cantidad"
+                }
         ) {
-            Class[] types = new Class [] {
+            Class[] types = new Class[]{
                 java.lang.String.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class
             };
 
             public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
+                return types[columnIndex];
             }
         });
         for (comida t : comida) {
@@ -462,6 +591,64 @@ public class Principal extends javax.swing.JFrame {
         simulacion.pack();
         simulacion.setVisible(true);
     }//GEN-LAST:event_iniciarMouseClicked
+
+    private void modifiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_modifiMouseClicked
+        // TODO add your handling code here:
+        adminClientes ap = new adminClientes("./CLIENTES.HOLADIEGO");
+        ap.cargarArchivo();
+        
+        cli = ap.getListaPersonas();
+       /* 
+        modi_combo.removeAll();
+        //modi_combo.removeAllItems();
+        
+        for (int i = 0; i < cli.size(); i++) {
+            modi_combo.addItem(cli.get(i).getNombre());
+        }
+        */
+        DefaultComboBoxModel modelo= new DefaultComboBoxModel(cli.toArray());
+        modi_combo.setModel(modelo);
+        modificar.setModal(true);
+        modificar.pack();
+        modificar.setVisible(true);
+    }//GEN-LAST:event_modifiMouseClicked
+
+    private void modi_comboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_modi_comboItemStateChanged
+        // TODO add your handling code here:
+        adminClientes ap = new adminClientes("./CLIENTES.HOLADIEGO");
+        ap.cargarArchivo();
+        cli = ap.getListaPersonas();
+        int pos=modi_combo.getSelectedIndex();
+        modi_cargo.setText(Integer.toString(cli.get(pos).getPagado()));
+        modi_efec.setText(Integer.toString(cli.get(pos).getBillete()));  
+    }//GEN-LAST:event_modi_comboItemStateChanged
+
+    private void eliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarMouseClicked
+        // TODO add your handling code here:
+        int pos =modi_combo.getSelectedIndex();
+        adminClientes ap = new adminClientes("./CLIENTES.HOLADIEGO");
+        ap.cargarArchivo();
+        ap.getListaPersonas().remove(pos);
+        ap.escribirArchivo();
+        JOptionPane.showMessageDialog(this, "se elimino de forma correcta");
+        cli= ap.getListaPersonas();
+        tamano_lista.setText("en la lista hay: " + cli.size() + " clientes");
+        modificar.dispose();
+    }//GEN-LAST:event_eliminarMouseClicked
+
+    private void bt_modificaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bt_modificaMouseClicked
+        // TODO add your handling code here:
+       adminClientes ap = new adminClientes("./CLIENTES.HOLADIEGO");
+        ap.cargarArchivo();
+        int pos=modi_combo.getSelectedIndex();
+        ap.getListaPersonas().get(pos).setBillete(Integer.parseInt(modi_efec.getText()));
+        ap.getListaPersonas().get(pos).setPagado(Integer.parseInt(modi_cargo.getText()));
+        ap.escribirArchivo();
+        JOptionPane.showMessageDialog(this, "se modifico de forma correcta");
+        cli= ap.getListaPersonas();
+        tamano_lista.setText("en la lista hay: " + cli.size() + " clientes");
+        modificar.dispose();
+    }//GEN-LAST:event_bt_modificaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -500,6 +687,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton UNITEC;
+    private javax.swing.JButton bt_modifica;
     private javax.swing.JTextField cli_apellido;
     private javax.swing.JTextField cli_billete;
     private javax.swing.JTextField cli_nombre;
@@ -509,10 +697,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton crea_cliente;
     private javax.swing.JButton creanormal;
     private javax.swing.JDialog crear;
+    private javax.swing.JButton eliminar;
     private javax.swing.JButton iniciar;
     private javax.swing.JDialog inventario;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -523,6 +715,11 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JTextField modi_cargo;
+    private javax.swing.JComboBox<String> modi_combo;
+    private javax.swing.JTextField modi_efec;
+    private javax.swing.JButton modifi;
+    private javax.swing.JDialog modificar;
     private javax.swing.JButton mostrar_inventar;
     private javax.swing.JButton normal;
     private javax.swing.JDialog simulacion;
@@ -538,4 +735,5 @@ public class Principal extends javax.swing.JFrame {
 
     ArrayList<cliente> cli = new ArrayList();
     ArrayList<comida> comida = new ArrayList();
+    
 }

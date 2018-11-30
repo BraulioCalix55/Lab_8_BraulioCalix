@@ -5,17 +5,19 @@
  */
 package lab_8_brauliocalix;
 
+import java.io.Serializable;
+
 /**
  *
  * @author User
  */
-public class comida {
+public class comida implements Serializable{
 
     private String nombre;
     private int tiempo;
     private int precio;
     private int cantidad;
-
+private static final long SerializableVersionUID = 13L;
     public comida() {
     }
 

@@ -28,9 +28,6 @@ public class clienteuni extends cliente{
         this.cuenta = cuenta;
     }
 
-    @Override
-    public String toString() {
-        return "clienteuni{" + "cuenta=" + cuenta + '}';
-    }
+    
     
 }
